@@ -120,7 +120,7 @@ cpus = tf.config.list_physical_devices(device_type='CPU')
 print(gpus, cpus)
 ```
 
-在连接电源你的移动平台上使用 RTX 2060 进行训练，花费时间大概 1min 左右。
+在连接电源的移动平台上使用 RTX 2060 进行训练，花费时间大概 1min 左右。
 
 在使用命令行工具进行训练结束后，会写出已训练好的卷积神经网络权重持久化文件，三个文件会被写到 `./models/model2Classi/storage` 下。
 
