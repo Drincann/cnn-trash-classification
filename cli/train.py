@@ -3,13 +3,15 @@ import tensorflow as tf
 import pathlib
 import sys
 import os
+import argparse
+from ModelsEnum import Models
 
 
 sys.path.insert(0, os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..')))
 
 
-def main():
+def trainModel2Classi():
     import globalConfig.config as config
     dataDir = pathlib.Path(config.model2Classi.dataDir)
     imgHeight = config.model2Classi.imgHeight
@@ -81,6 +83,26 @@ def main():
     plt.legend(loc='upper right')
     plt.title('loss')
     plt.show()
+
+
+def trainModelMulClassi():
+    pass
+
+
+def main():
+    models = [Models.Model2Classi, Models.ModelMulClassi]
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-m", "--model", help="Model to training", required=False,
+                        default='2classi', type=str, choices=models)
+
+    args = parser.parse_args()
+
+    if args.model == Models.Model2Classi.value:
+        trainModel2Classi()
+    # elif args.model == Models.ModelMulClassi.value:
+    #     trainModelMulClassi()
+    else:
+        raise ValueError('Model not found')
 
 
 main()
