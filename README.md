@@ -20,6 +20,18 @@ git clone https://github.com/Drincann/cnn-trash-classification.git
 cd cnn-trash-classification
 ```
 
+## 准备你的环境
+
+```sh
+python3 -m pip install -r requirements.txt
+```
+
+注意，请使用 TensorFlow >= 2.7.0，来支持一些该 repo 使用到的新特性。
+
+请不要使用 macOS，Apple 目前对 TensorFlow 的支持不完整，见 [https://github.com/apple/tensorflow_macos](https://github.com/apple/tensorflow_macos)。
+
+使用 Windows 或 Ubuntu Linux。
+
 ## Dataset
 
 ### 选择数据集
