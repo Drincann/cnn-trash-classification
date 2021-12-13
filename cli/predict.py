@@ -1,4 +1,3 @@
-from enum import Enum
 import tensorflow
 from PIL import Image
 import numpy
@@ -6,7 +5,7 @@ import argparse
 import os
 import sys
 import pandas
-
+from ModelsEnum import Models
 
 sys.path.insert(0, os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..')))
@@ -24,11 +23,6 @@ def predict(model, imgPath, globalConfig):
     )
     img = tensorflow.expand_dims(img, 0)
     return tensorflow.nn.softmax(model.predict(img))
-
-
-class Models(Enum):
-    Model2Classi = '2classi'
-    ModelMulClassi = 'mulclassi'
 
 
 def main():
