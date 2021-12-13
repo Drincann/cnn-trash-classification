@@ -1,3 +1,6 @@
 data/*
 
 __pycache__
+
+# 保留除了持久化数据外的模型定义
+models/**/storage
