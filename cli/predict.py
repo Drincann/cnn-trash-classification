@@ -30,7 +30,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--input", help="Input image",
                         required=True, type=str, nargs='+')
-    parser.add_argument("-m", "--model", help="Model", required=False,
+    parser.add_argument("-m", "--model", help="Model to use", required=False,
                         default='2classi', type=str, choices=models)
 
     args = parser.parse_args()
