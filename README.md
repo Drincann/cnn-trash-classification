@@ -108,7 +108,7 @@ python3 ./cli/train.py -m 2classi
 
 训练是一个漫长的过程，
 
-在仅使用训练集提供的 2k+ 个图片的情况下，在连接电源的移动平台上使用 CPU i5-9750H 进行训练，花费时间大概 10min+。
+在仅使用训练集提供的 2k+ 个图片的情况下，在连接电源的移动平台上使用 CPU i5-9300H 进行训练，花费时间大概 10min+。
 
 如果要使用 GPU 加速训练，请访问 [https://www.tensorflow.org/install/gpu](https://www.tensorflow.org/install/gpu) 查看你的 GPU 支持情况，并按照文档安装环境依赖。
 
