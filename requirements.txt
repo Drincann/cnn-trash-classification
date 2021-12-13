@@ -1,0 +1,6 @@
+tensorflow
+pyyaml
+h5py
+matplotlib
+pillow
+pandas
