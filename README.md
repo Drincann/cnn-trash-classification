@@ -4,7 +4,7 @@
 
 该应用提供了：
 
-- 带有大量文本的 jyputer notebook
+- 带有大量文本的 jupyter notebook
 - 数据集预处理脚本
 - 用于训练的命令行工具
 - 用于预测新数据的命令行工具
@@ -82,7 +82,7 @@ cp -R ${datasetroot}/recycle ./data/model2ClassiDataset/
 
 ### 两标签数据集
 
-你可以参考 jyputer notebook `./notebookModel2Classi.ipynb`，它是可运行的，并带有大量描述文本，流程包括从读取数据集到最终输出持久化的卷积神经网络权重文件。
+你可以参考 jupyter notebook `./notebookModel2Classi.ipynb`，它是可运行的，并带有大量描述文本，流程包括从读取数据集到最终输出持久化的卷积神经网络权重文件。
 
 或者使用脚本训练：
 
