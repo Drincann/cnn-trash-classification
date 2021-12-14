@@ -38,8 +38,6 @@ def trainModel2Classi():
         batch_size=batchSize
     )
 
-    classNames = trainDataset.class_names
-
     trainDataset = trainDataset.cache().shuffle(
         1000).prefetch(buffer_size=tf.data.AUTOTUNE)
     valDataset = valDataset.cache().prefetch(buffer_size=tf.data.AUTOTUNE)
@@ -55,14 +53,14 @@ def trainModel2Classi():
     )
 
     acc = history.history['accuracy']
-    val_acc = history.history['val_accuracy']
+    valAcc = history.history['val_accuracy']
 
     loss = history.history['loss']
-    val_loss = history.history['val_loss']
+    valLoss = history.history['val_loss']
 
-    epochs_range = range(epochs)
+    epochsRange = range(epochs)
 
-    modelConfig = config.model2Classi
+    modelConfig = config.modelMulClassi
     if not os.path.exists(modelConfig.savedDir):
         os.makedirs(modelConfig.savedDir)
 
@@ -72,21 +70,89 @@ def trainModel2Classi():
     plt.figure(figsize=(8, 8))
 
     plt.subplot(1, 2, 1)
-    plt.plot(epochs_range, acc, label='training')
-    plt.plot(epochs_range, val_acc, label='validation')
+    plt.plot(epochsRange, acc, label='training')
+    plt.plot(epochsRange, valAcc, label='validation')
     plt.legend(loc='lower right')
     plt.title('accuracy')
 
     plt.subplot(1, 2, 2)
-    plt.plot(epochs_range, loss, label='training')
-    plt.plot(epochs_range, val_loss, label='validation')
+    plt.plot(epochsRange, loss, label='training')
+    plt.plot(epochsRange, valLoss, label='validation')
     plt.legend(loc='upper right')
     plt.title('loss')
     plt.show()
 
 
 def trainModelMulClassi():
-    pass
+    import globalConfig.config as config
+    dataDir = pathlib.Path(config.modelMulClassi.dataDir)
+    imgHeight = config.modelMulClassi.imgHeight
+    imgWidth = config.modelMulClassi.imgWidth
+    batchSize = config.modelMulClassi.batchSize
+    dataDir = pathlib.Path(config.modelMulClassi.dataDir)
+    epochs = config.modelMulClassi.epochs
+
+    trainDataset = tf.keras.utils.image_dataset_from_directory(
+        dataDir,
+        validation_split=0.2,
+        subset="training",
+        seed=123,
+        image_size=(imgHeight, imgWidth),
+        batch_size=batchSize
+    )
+
+    valDataset = tf.keras.utils.image_dataset_from_directory(
+        dataDir,
+        validation_split=0.2,
+        subset="validation",
+        seed=123,
+        image_size=(imgHeight, imgWidth),
+        batch_size=batchSize
+    )
+
+    trainDataset = trainDataset.cache().shuffle(
+        1000).prefetch(buffer_size=tf.data.AUTOTUNE)
+    valDataset = valDataset.cache().prefetch(buffer_size=tf.data.AUTOTUNE)
+
+    from models.modelMulClassi.modelDefinition import model
+
+    print(model.summary())
+
+    history = model.fit(
+        trainDataset,
+        validation_data=valDataset,
+        epochs=epochs
+    )
+
+    acc = history.history['accuracy']
+    valAcc = history.history['val_accuracy']
+
+    loss = history.history['loss']
+    valLoss = history.history['val_loss']
+
+    epochsRange = range(epochs)
+
+    modelConfig = config.modelMulClassi
+    if not os.path.exists(modelConfig.savedDir):
+        os.makedirs(modelConfig.savedDir)
+
+    model.save_weights(os.path.join(
+        modelConfig.savedDir, modelConfig.savedName))
+
+    plt.figure(figsize=(8, 8))
+
+    plt.subplot(1, 2, 1)
+    plt.plot(epochsRange, acc, label='training')
+    plt.plot(epochsRange, valAcc, label='validation')
+    plt.legend(loc='lower right')
+    plt.title('accuracy')
+
+    plt.subplot(1, 2, 2)
+    plt.plot(epochsRange, loss, label='training')
+    plt.plot(epochsRange, valLoss, label='validation')
+    plt.legend(loc='upper right')
+    plt.title('loss')
+    plt.show()
 
 
 def main():
@@ -99,8 +165,8 @@ def main():
 
     if args.model == Models.Model2Classi.value:
         trainModel2Classi()
-    # elif args.model == Models.ModelMulClassi.value:
-    #     trainModelMulClassi()
+    elif args.model == Models.ModelMulClassi.value:
+        trainModelMulClassi()
     else:
         raise ValueError('Model not found')
 
