@@ -48,6 +48,18 @@ def main():
     else:
         raise ValueError('Model not found')
 
+    # 检查输入的图片是否是存在
+    for img in args.input:
+        if not os.path.exists(img):
+            print(f"Error: Input img {img} not exists")
+            exit(1)
+
+    # 检查输入的图片是否是文件
+    for img in args.input:
+        if not os.path.isfile(img):
+            print(f"Error: Input img {img} is not a file")
+            exit(1)
+
     scores = predict(model, args.input, config)
 
     print()
