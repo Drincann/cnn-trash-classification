@@ -1,5 +1,4 @@
 import os
-from typing import ClassVar
 
 # 模型持久化目录
 modelsDir = os.path.normpath(os.path.join(
