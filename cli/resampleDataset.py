@@ -51,7 +51,8 @@ def main():
     # 查看所有输入文件中图片最多的数量
     maxCount = 0
     for floder in args.input:
-        count = len(os.listdir(floder))
+        count = len([filename for filename in os.listdir(floder) if filename.endswith(
+            ('.jpg', '.png', '.jpeg', '.JPG', '.PNG', '.JPEG', '.bmp', '.BMP'))])
         if count > maxCount:
             maxCount = count
 
