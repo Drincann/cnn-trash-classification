@@ -29,3 +29,30 @@ class model2Classi:
 
     # 迭代次数
     epochs = 15
+
+# 模型 2 配置
+
+
+class modelMulClassi:
+    # 模型 2 图片缩放尺寸
+    imgWidth = 180
+    imgHeight = 180
+    # 模型 2 目录
+    savedDir = os.path.normpath(os.path.join(
+        modelsDir, 'modelMulClassi', 'storage'))
+    # 模型 2 持久化文件名
+    savedName = 'modelMulClassi'
+    # 模型 2 持久化文件路径
+    savedPath = os.path.normpath(os.path.join(savedDir, savedName))
+    # 模型 2 分类数
+    classNum = 5
+    # 模型 2 分类名称
+    classNames = ['cardboard', 'glass', 'metal', 'paper', 'plastic']
+    # 数据集根目录
+    dataDir = os.path.normpath(os.path.join(os.path.dirname(__file__),
+                                            '..', 'data', 'modelMulClassiDataset'))
+    # 单个样本集数量
+    batchSize = 32
+
+    # 迭代次数
+    epochs = 30
