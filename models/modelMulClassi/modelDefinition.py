@@ -1,9 +1,9 @@
 from tensorflow import keras
 from globalConfig import config
 
-imgHeight = config.model2Classi.imgHeight
-imgWidth = config.model2Classi.imgWidth
-classNames = config.model2Classi.classNames
+imgHeight = config.modelMulClassi.imgHeight
+imgWidth = config.modelMulClassi.imgWidth
+classNames = config.modelMulClassi.classNames
 
 model = keras.Sequential([
     keras.layers.InputLayer(input_shape=(imgHeight, imgWidth, 3)),
