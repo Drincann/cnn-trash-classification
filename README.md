@@ -56,12 +56,14 @@ python3 -m pip install -r requirements.txt
 
 ### 准备数据集
 
+#### 数据集一
+
 请在根目录创建 `data` 目录，脚本将在这里寻找数据集。
 
 对于上节中的第一个数据集，它应该位于 `./data/model2ClassiDataset`：
 
 ```sh
-mkdir -p ./data/model2ClassiDataset
+mkdir -p ./data/model2ClassiDataset/
 ```
 
 将第一个数据集解压：
@@ -92,13 +94,62 @@ cp -R ${datasetroot}/recycle ./data/model2ClassiDataset/
 
 这是因为，在后面进行数据集拆分时，脚本会将文件名作为标签名，而且，在全局配置文件 `./globalConfig/config.py` 中我们也是这样配置的。
 
+#### 数据集二
+
+你可以先跳过这一节，尝试训练第一个模型。
+
+对于第二个数据集，它应该位于 `./data/modelMalClassiDataset`：
+
+```sh
+$ tree -L 1
+.
+├───cardboard
+├───glass
+├───metal
+├───paper
+├───plastic
+└───trash
+```
+
+其中 trash、paper、cardboard 较为相似，所以我去掉了 trash 这个标签。
+
+然后我们把它放到 `./data/modelMalClassiDataset` 目录下：
+
+```sh
+rm -r ${datasetroot}/trash/
+cp -R ${datasetroot}/* ./data/modelMulClassiDataset/
+```
+
+#### 平衡数据集
+
+对于第二个数据集，不同标签下的图片数量存在不小的差距，这可能会让模型认为某些标签更容易出现，拟合效果不好。
+
+使用该 repo 提供的一个命令行工具 `./cli/resampleDataset.py`，它实现了对输入图片数据集的随机过采样算法。
+
+```sh
+python3 ./cli/resampleDataset.py -i \
+./data/modelMulClassiDataset/cardboard/ \
+./data/modelMulClassiDataset/glass/ \
+./data/modelMulClassiDataset/metal/ \
+./data/modelMulClassiDataset/paper/ \
+./data/modelMulClassiDataset/plastic/
+```
+
+这个脚本会扫描所有输入的目录，找出最大图片数量，然后将其他标签的图片随机过采样到这个最大数量。
+
+第一个数据集的图片数量差异不大，不过你也可以对它进行随机过采样：
+
+```sh
+python3 ./cli/resampleDataset.py -i ./data/model2ClassiDataset/organic/ ./data/model2ClassiDataset/recycle/
+```
+
 ## Train
 
 ### 两标签数据集
 
 你可以参考 jupyter notebook `./notebookModel2Classi.ipynb`，它是可运行的，并带有大量描述文本，流程包括从读取数据集到最终输出持久化的卷积神经网络权重文件。
 
-或者使用脚本训练：
+或者使用脚本（命令行工具）训练：
 
 ```sh
 python3 ./cli/train.py -m 2classi
@@ -128,7 +179,13 @@ print(gpus, cpus)
 
 ### 多标签数据集
 
-not implement
+对这个数据集的 jupyter notebook 位于 `./notebookModelMulClassi.ipynb`，你也可以参考或运行他。
+
+更简单的方式是使用脚本训练：
+
+```sh
+python3 ./cli/train.py -m mulclassi
+```
 
 ## Predict
 
