@@ -16,22 +16,21 @@ def checkInput(floders):
     # 检查文件夹是否存在
     for floder in floders:
         if not os.path.exists(floder):
-            print("Error: Input floder not exists")
+            print(f"Error: Input floder {floder} not exists")
             exit(1)
     # 检查输入的文件夹是否是文件夹
     for floder in floders:
         if not os.path.isdir(floder):
-            print("Error: Input floder is not a floder")
+            print(f"Error: Input floder {floder} is not a floder")
             exit(1)
 
     # 检查输入的文件夹是否为空
     for floder in floders:
         if len(os.listdir(floder)) == 0:
-            print("Error: Input floder is empty")
+            print(f"Error: Input floder {floder} is empty")
             exit(1)
 
     # 检查输入的文件夹中是否至少存在一张图片
-
     for floder in floders:
         for filename in os.listdir(floder):
             if filename.endswith(('.jpg', '.png', '.jpeg', '.JPG', '.PNG', '.JPEG', '.bmp', '.BMP')):
@@ -39,13 +38,6 @@ def checkInput(floders):
         else:
             print(f"Error: Input floder {floder} has no image")
             exit(1)
-
-    # for floder in floders:
-    #     for filename in os.listdir(floder):
-    #         if extname(filename) in ['.jpg', '.png', '.jpeg', '.JPG', '.PNG', '.JPEG', '.bmp', '.BMP']:
-    #             break
-    # print(f"Error: Input floder {floder} has no image")
-    # exit(1)
 
 
 def main():
