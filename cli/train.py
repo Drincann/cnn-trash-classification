@@ -156,7 +156,7 @@ def trainModelMulClassi():
 
 
 def main():
-    models = [Models.Model2Classi, Models.ModelMulClassi]
+    models = [Models.Model2Classi.value, Models.ModelMulClassi.value]
     parser = argparse.ArgumentParser()
     parser.add_argument("-m", "--model", help="Model to training", required=False,
                         default='2classi', type=str, choices=models)
