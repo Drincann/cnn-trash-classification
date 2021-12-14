@@ -26,7 +26,7 @@ def predict(model, imgPath, globalConfig):
 
 
 def main():
-    models = [Models.Model2Classi, Models.ModelMulClassi]
+    models = [Models.Model2Classi.value, Models.ModelMulClassi.value]
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--input", help="Input image",
                         required=True, type=str, nargs='+')
@@ -36,13 +36,15 @@ def main():
     args = parser.parse_args()
     import globalConfig.config as config
     from models.model2Classi.modelDefinition import model as model2Classi
-    # from ..models.modelMulClassi.modelDefinition import model as modelMulClassi
+    from models.modelMulClassi.modelDefinition import model as modelMulClassi
     if args.model == Models.Model2Classi.value:
         model = model2Classi
+        classNames = config.model2Classi.classNames
         model.load_weights(config.model2Classi.savedPath)
-    # elif args.model == Models.ModelMulClassi.value:
-    #     model = modelMulClassi
-    #     modelMulClassi.load_weights(config.modelMulClassi.savedPath)
+    elif args.model == Models.ModelMulClassi.value:
+        model = modelMulClassi
+        classNames = config.modelMulClassi.classNames
+        modelMulClassi.load_weights(config.modelMulClassi.savedPath)
     else:
         raise ValueError('Model not found')
 
@@ -52,8 +54,8 @@ def main():
     for i, score in enumerate(scores):
         print(f'{args.input[i]} probability: {score[0]}')
         print(pandas.Series({classification: f'{str(float(score[0][i])*100)} %' for i, classification in enumerate(
-            config.model2Classi.classNames)}))
-        print(f'result: {config.model2Classi.classNames[numpy.argmax(score)]}')
+            classNames)}))
+        print(f'result: {classNames[numpy.argmax(score)]}')
         print()
 
 
