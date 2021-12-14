@@ -39,14 +39,14 @@ def main():
     # from ..models.modelMulClassi.modelDefinition import model as modelMulClassi
     if args.model == Models.Model2Classi.value:
         model = model2Classi
-        model2Classi.load_weights(config.model2Classi.savedPath)
+        model.load_weights(config.model2Classi.savedPath)
     # elif args.model == Models.ModelMulClassi.value:
     #     model = modelMulClassi
     #     modelMulClassi.load_weights(config.modelMulClassi.savedPath)
     else:
         raise ValueError('Model not found')
 
-    scores = predict(model2Classi, args.input, config)
+    scores = predict(model, args.input, config)
 
     print()
     for i, score in enumerate(scores):
