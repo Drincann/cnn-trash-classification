@@ -11,15 +11,15 @@ sys.path.insert(0, os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..')))
 
 
-def predict(model, imgPath, globalConfig):
+def predict(model, imgPath, imgHeight, imgWidth):
     # 如果 imgPath 是数组
     if isinstance(imgPath, list):
-        return [predict(model, img, globalConfig) for img in imgPath]
+        return [predict(model, img,  imgHeight, imgWidth) for img in imgPath]
 
     img = numpy.array(
         Image.open(imgPath)
         .convert('RGB')
-        .resize((globalConfig.model2Classi.imgHeight, globalConfig.model2Classi.imgWidth))
+        .resize((imgHeight, imgWidth))
     )
     img = tensorflow.expand_dims(img, 0)
     return tensorflow.nn.softmax(model.predict(img))
@@ -41,10 +41,14 @@ def main():
         model = model2Classi
         classNames = config.model2Classi.classNames
         model.load_weights(config.model2Classi.savedPath)
+        imgHeight = config.model2Classi.imgHeight
+        imgWidth = config.model2Classi.imgWidth
     elif args.model == Models.ModelMulClassi.value:
         model = modelMulClassi
         classNames = config.modelMulClassi.classNames
         modelMulClassi.load_weights(config.modelMulClassi.savedPath)
+        imgHeight = config.modelMulClassi.imgHeight
+        imgWidth = config.modelMulClassi.imgWidth
     else:
         raise ValueError('Model not found')
 
@@ -60,7 +64,7 @@ def main():
             print(f"Error: Input img {img} is not a file")
             exit(1)
 
-    scores = predict(model, args.input, config)
+    scores = predict(model, args.input, imgHeight, imgWidth)
 
     print()
     for i, score in enumerate(scores):
