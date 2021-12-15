@@ -12,6 +12,10 @@ def extname(filename):
     return filename[filename.rindex('.'):]
 
 
+def basename(filename):
+    return filename[:filename.rindex('.')]
+
+
 def checkInput(floders):
     # 检查文件夹是否存在
     for floder in floders:
@@ -72,17 +76,13 @@ def main():
 
     # 遍历每个小于最大数量的文件夹
     for floder in args.input:
-        # 图片列表
-        imgList = os.listdir(floder)
-        # 过滤图片
-        imgList = [filename for filename in imgList if filename.endswith(
-            ('.jpg', '.png', '.jpeg', '.JPG', '.PNG', '.JPEG', '.bmp', '.BMP'))]
         # 随机重采样图片直到达到最大数量
 
         while len(os.listdir(floder)) < maxCount:
             # 随机选择一张图片
+            imgList = [filename for filename in os.listdir(floder) if filename.endswith(
+                ('.jpg', '.png', '.jpeg', '.JPG', '.PNG', '.JPEG', '.bmp', '.BMP'))]
             filename = random.choice(imgList)
-
             img = keras.preprocessing.image.load_img(
                 os.path.join(floder, filename),
                 target_size=(imgHeight, imgWidth))
@@ -97,9 +97,10 @@ def main():
             img = tf.squeeze(img, 0)
 
             img = keras.preprocessing.image.array_to_img(img)
-            img.save(os.path.join(floder, f'{filename}_resample.jpg'))
+            img.save(os.path.join(
+                floder, f'{basename(filename)}_resample.jpg'))
             print(
-                f"{floder} resample {filename} to {filename}_resample.jpg {len(os.listdir(floder))}/{maxCount}")
+                f"{floder} resample {filename} to {basename(filename)}_resample.jpg {len(os.listdir(floder))}/{maxCount}")
 
 
 main()
