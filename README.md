@@ -113,7 +113,7 @@ $ tree -L 1
 
 其中 trash、paper、cardboard 较为相似，所以我去掉了 trash 这个标签。
 
-然后我们把它放到 `./data/modelMalClassiDataset` 目录下：
+然后我们把它放到 `./data/modelMulClassiDataset` 目录下：
 
 ```sh
 rm -r ${datasetroot}/trash/
